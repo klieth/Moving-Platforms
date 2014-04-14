@@ -10,7 +10,7 @@ import java.util.Random;
 import javax.swing.*;
 
 
-public class Game extends JFrame implements ActionListener, KeyListener {
+public class Game extends JFrame implements KeyListener {
 	
 	private Timer timer;
 	
@@ -27,22 +27,13 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 		
 		add(panel);
 		
-		timer = new Timer(50, this);
 		
-		random = new Random();
-		
+		setTitle("Moving Platforms");
 		setSize(920, 480);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setFocusable(true);
 		setResizable(false);
-	}
-	
-	public void actionPerformed(ActionEvent e) {
-		
-		panel.setBackground(new Color(random.nextInt(256),
-									random.nextInt(256),
-									random.nextInt(256)));
 	}
 
 	public static void main(String[] args) {
