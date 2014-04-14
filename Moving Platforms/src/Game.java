@@ -1,20 +1,35 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.Random;
 
 import javax.swing.*;
 
 
-public class Game extends JFrame {
+public class Game extends JFrame implements ActionListener, KeyListener {
+	
+	private Timer timer;
+	
+	private JPanel panel;
+	
+	private Random random;
 	
 	public Game() {
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBackground(new Color(156, 28, 107));
-		panel.addKeyListener(new TAdapter());
+		
+		addKeyListener(this);
 		
 		add(panel);
+		
+		timer = new Timer(50, this);
+		
+		random = new Random();
 		
 		setSize(920, 480);
 		setLocationRelativeTo(null);
@@ -23,11 +38,11 @@ public class Game extends JFrame {
 		setResizable(false);
 	}
 	
-	private class TAdapter extends KeyAdapter {
+	public void actionPerformed(ActionEvent e) {
 		
-		public void keyReleased(KeyEvent e) {
-			System.out.println("Hi");
-		}
+		panel.setBackground(new Color(random.nextInt(256),
+									random.nextInt(256),
+									random.nextInt(256)));
 	}
 
 	public static void main(String[] args) {
@@ -38,6 +53,24 @@ public class Game extends JFrame {
 			}
 		});
 
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("Hi");
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
