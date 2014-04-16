@@ -1,24 +1,22 @@
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.net.URL;
 
 
-public class Mob {
+public class Mob extends ImageSprite {
 	
 	//this will be the base class for all moving objects (possibly barring the player)
-	int x, y;
 	int width, height;
 	double rotation;
 	double vel;
-	double xvel, yvel;
+	double xVel, yVel;
 	Image sprite;
 
-	public Mob(int x, int y, Image sprite) {
-		this.x = x;
-		this.y = y;
-		this.sprite = sprite;
-		this.width = sprite.getWidth(null);
-		this.height = sprite.getHeight(null);
+	public Mob(int x, int y, URL imgUrl) {
+		super(x, y, imgUrl);
+		
+		this.xVel = 0;
+		this.yVel = 0;
 	}
 	
 	public void setSize(int width, int height) {
@@ -28,26 +26,17 @@ public class Mob {
 	}
 	
 	public void setVel(double xvel, double yvel) {
-		this.xvel = xvel;
-		this.yvel = yvel;
-	}
-	
-	public void setPosition(int x, int y) {
-		this.x = x;
-		this.y = y;
+		this.xVel = xvel;
+		this.yVel = yvel;
 	}
 	
 	public void move() {
-		x += xvel;
-		y += yvel;
+		setX(getX() + this.xVel);
+		setY(getY() + this.yVel);
+		
+		updateCenter();
 	}
 	
-	public void draw(Graphics2D g2d) {
-		g2d.translate(x, y);
-		g2d.rotate(rotation);
-		g2d.drawImage(sprite, 0, 0, width, height, null, null);
-		g2d.rotate(-rotation);
-		g2d.translate(0, 0);
-	}
+	
 	
 }
