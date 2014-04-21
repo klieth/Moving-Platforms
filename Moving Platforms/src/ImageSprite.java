@@ -10,19 +10,22 @@ public class ImageSprite {
 	
 	private double xPos, yPos;
 	private double centerX, centerY;
+	private URL url;
 	
 	private int rotation;
 	
 	private Image img;
 	
-	public ImageSprite(int x, int y, URL url) {
+	public ImageSprite(int x, int y, String url) {
 		
 		this.xPos = x;
 		this.yPos = y;
+		this.url = this.getClass().getResource(
+				url);
 		
-		if (url != null) {
+		if (this.url != null) {
 			
-			this.img = new ImageIcon(url).getImage();
+			this.img = new ImageIcon(this.url).getImage();
 			this.centerX = this.xPos + (getWidth() / 2);
 			this.centerY = this.yPos + (getHeight() / 2);
 		} else {
@@ -33,14 +36,21 @@ public class ImageSprite {
 		}
 		
 		this.rotation = 0;
+		
+		System.out.println("X: " + this.xPos);
+		System.out.println("centerX: " + this.centerX);
+		System.out.println("Y: " + this.yPos);
+		System.out.println("centerY: " + this.centerY);
 	}
 	
 	public void draw(Graphics2D g2d) {
-		g2d.translate(centerX, centerY);
-		g2d.rotate(rotation);
-		g2d.drawImage(this.img, (int)-this.centerX, (int)-this.centerY, getWidth(), getHeight(), null, null);
-		g2d.rotate(-rotation);
-		g2d.translate(0, 0);
+		g2d.drawImage(getImage(), (int) getX(), (int) getY(), getWidth(), getHeight(), null);
+		g2d.rotate(Math.PI / 2);
+//		g2d.translate(centerX, centerY);
+//		g2d.rotate(rotation);
+//		g2d.drawImage(this.img, (int)-this.centerX, (int)-this.centerY, getWidth(), getHeight(), null, null);
+//		g2d.rotate(-rotation);
+//		g2d.translate(0, 0);
 	}
 	
 	public double getX() { return this.xPos; }
@@ -75,5 +85,10 @@ public class ImageSprite {
 			this.centerX = this.xPos;
 			this.centerY = this.yPos;
 		}
+		
+		System.out.println("X: " + this.xPos);
+		System.out.println("centerX: " + this.centerX);
+		System.out.println("Y: " + this.yPos);
+		System.out.println("centerY: " + this.centerY);
 	}
 }

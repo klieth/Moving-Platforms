@@ -12,7 +12,7 @@ public class Mob extends ImageSprite {
 	double xVel, yVel;
 	Image sprite;
 
-	public Mob(int x, int y, URL imgUrl) {
+	public Mob(int x, int y, String imgUrl) {
 		super(x, y, imgUrl);
 		
 		this.xVel = 0;

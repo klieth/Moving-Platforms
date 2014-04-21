@@ -6,7 +6,7 @@ public class Enemy extends Mob {
 	
 	private int health; // each enemy type sets health in own constructor
 	
-	public Enemy(int x, int y, URL imgUrl) {
+	public Enemy(int x, int y, String imgUrl) {
 		super(x, y, imgUrl);
 	}
 	
