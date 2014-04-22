@@ -18,6 +18,7 @@ public class Board extends JPanel implements ActionListener {
 		
 		this.world = new World();
 		this.timer = new Timer(20, this);
+		this.timer.start();
 	}
 	
 	public void paint(Graphics g) {
@@ -28,7 +29,7 @@ public class Board extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		
 		this.world.move();
 		repaint();
 	}

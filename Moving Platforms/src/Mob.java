@@ -50,9 +50,9 @@ public class Mob {
 		
 	}
 	
-	public void setVel(double xvel, double yvel) {
-		this.xVel = xvel;
-		this.yVel = yvel;
+	public void setVel(double xVel, double yVel) {
+		this.xVel = xVel;
+		this.yVel = yVel;
 	}
 	
 	public void setXVel(double xVel) {
@@ -63,23 +63,25 @@ public class Mob {
 	public double getXVel() { return this.xVel; }
 	
 	public void setYVel(double yVel) {
+		
 		this.yVel = yVel;
 	}
 	
-	public double getYVel() { return this.xVel; }
+	public double getYVel() { return this.yVel; }
 
 	public void move() {
-		setX(getX() + this.xVel);
-		setY(getY() + this.yVel);
+		
+		setX(getX() + getXVel());
+		setY(getY() + getYVel());
 		
 		updateCenter();
 	}
 	
 	public void draw(Graphics2D g2d) {
 		
-		g2d.rotate(rotation, centerX, centerY);
+		g2d.rotate(this.rotation, this.centerX, this.centerY);
 		g2d.drawImage(getImage(), (int) getX(), (int) getY(), getWidth(), getHeight(), null);
-		g2d.rotate(-rotation);
+		g2d.rotate(-this.rotation);
 	}
 	
 	public double getX() { return this.xPos; }
