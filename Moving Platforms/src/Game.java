@@ -9,7 +9,7 @@ public class Game extends JFrame {
 		add(new Board());
 		
 		setTitle("Moving Platforms");
-		setSize(720, 480);
+		setSize(620, 480);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setFocusable(true);
@@ -17,7 +17,6 @@ public class Game extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				Game game = new Game();

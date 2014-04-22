@@ -43,7 +43,7 @@ public class Mob {
 		this.xVel = 0;
 		this.yVel = 0;
 	}
-	
+
 	public void setSize(int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -55,6 +55,19 @@ public class Mob {
 		this.yVel = yvel;
 	}
 	
+	public void setXVel(double xVel) {
+		
+		this.xVel = xVel;
+	}
+	
+	public double getXVel() { return this.xVel; }
+	
+	public void setYVel(double yVel) {
+		this.yVel = yVel;
+	}
+	
+	public double getYVel() { return this.xVel; }
+
 	public void move() {
 		setX(getX() + this.xVel);
 		setY(getY() + this.yVel);

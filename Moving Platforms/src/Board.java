@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,13 +21,15 @@ public class Board extends JPanel implements ActionListener {
 	}
 	
 	public void paint(Graphics g) {
+		super.paint(g);
 		
-		world.draw(g);
+		this.world.draw((Graphics2D) g);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		this.world.move();
 		repaint();
 	}
 }
