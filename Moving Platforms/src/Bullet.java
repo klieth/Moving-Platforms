@@ -3,9 +3,12 @@ import java.awt.Image;
 
 public class Bullet extends Mob{
 
-	public Bullet(int x, int y, String imgUrl) {
+	public Bullet(int x, int y, double angle, double vel, String imgUrl) {
 		super(x, y, imgUrl);
-		// TODO Auto-generated constructor stub
+
+		setRotation(angle);
+		setXVel(vel * Math.cos(angle));
+		setYVel(vel * Math.sin(angle));
 	}
 
 }

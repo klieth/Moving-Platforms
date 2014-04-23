@@ -81,7 +81,7 @@ public class Mob {
 		
 		g2d.rotate(this.rotation, this.centerX, this.centerY);
 		g2d.drawImage(getImage(), (int) getX(), (int) getY(), getWidth(), getHeight(), null);
-		g2d.rotate(-this.rotation);
+		g2d.rotate(-this.rotation, this.centerX, this.centerY);
 	}
 	
 	public double getX() { return this.xPos; }
@@ -101,7 +101,7 @@ public class Mob {
 	public int getHeight() { return this.img.getHeight(null); }
 	
 	public double getRotation() { return this.rotation; }
-	public void setRotation(int rotation) { this.rotation = rotation; }
+	public void setRotation(double rotation) { this.rotation = rotation; }
 	
 	public Image getImage() { return this.img; }
 	

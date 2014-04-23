@@ -81,7 +81,7 @@ public class Player extends Mob {
 		
 		// CHANGE HARDCODED STUFF HERE //
 		if (obj instanceof Platform) {
-			if (getY() < objTop - getHeight() || getY() > objBottom - 59)
+			if (getY() < objTop - getHeight() || getY() + 59 > objBottom)
 				return false;
 		} else {
 			if (getY() < objTop - getHeight() || getY() > objBottom)

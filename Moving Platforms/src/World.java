@@ -1,4 +1,5 @@
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -62,4 +63,22 @@ public class World {
 	}
 	
 	public Player getPlayer() { return player; }
+	
+	public void MouseReleased(MouseEvent e) {
+		
+		int button = e.getButton();
+		
+		if (button == MouseEvent.BUTTON1) {
+			
+			double xDif = e.getX() - player.getX();
+			
+			double angle = Math.atan((e.getY() - player.getY()) / (e.getX() - player.getX()));
+			
+			if (xDif < 0)
+				angle += Math.PI;
+			
+			System.out.println("Angle is: " + Math.toDegrees(angle));
+			bullets.add(new Bullet((int) getPlayer().getX(), (int) getPlayer().getY(), angle, 10, "/Sprites/Bullet.png"));
+		}
+	}
 }

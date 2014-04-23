@@ -1,5 +1,7 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -15,6 +17,7 @@ public class Game extends JFrame {
 		add(board);
 		
 		addKeyListener(new InputListener());
+		addMouseListener(new MouseInput());
 		
 		setTitle("Moving Platforms");
 		setSize(620, 480);
@@ -50,6 +53,28 @@ public class Game extends JFrame {
 
 		@Override
 		public void keyTyped(KeyEvent e) { }
+		
+	}
+	
+	private class MouseInput implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) { }
+
+		@Override
+		public void mousePressed(MouseEvent e) { }
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			
+			board.getWorld().MouseReleased(e);
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) { }
+
+		@Override
+		public void mouseExited(MouseEvent e) { }
 		
 	}
 
