@@ -6,9 +6,10 @@ public class Player extends Mob {
 	
 	public final double DEFAULT_FRICTION = .5;
 	public final double DEFAULT_GRAV = .5;
-	public final int DEFAULT_NUM_JUMPS = 1;
+	public final int DEFAULT_NUM_JUMPS = 5;
 	
-	public final int MAX_VEL = 7;
+	public final int MAX_X_VEL = 7;
+	public final int MAX_Y_VEL = 30;
 	
 	private boolean left = false;
 	private boolean right = false;
@@ -43,11 +44,11 @@ public class Player extends Mob {
 		setYVel(getYVel() + this.gravity);
 		testCollide();
 		
-		if (Math.abs(getXVel()) > MAX_VEL)
-			setXVel(MAX_VEL * (getXVel() / Math.abs(getXVel())));
+		if (Math.abs(getXVel()) > MAX_X_VEL)
+			setXVel(MAX_X_VEL * (getXVel() / Math.abs(getXVel())));
 		
-		if (Math.abs(getYVel()) > MAX_VEL)
-			setYVel(MAX_VEL * (getYVel() / Math.abs(getYVel())));
+		if (Math.abs(getYVel()) > MAX_Y_VEL)
+			setYVel(MAX_Y_VEL * (getYVel() / Math.abs(getYVel())));
 		
 		if (onPlatform && Math.abs(getXVel()) >= this.friction)
 			setXVel(getXVel() - ((getXVel() / Math.abs(getXVel())) * this.friction));
@@ -99,6 +100,11 @@ public class Player extends Mob {
 				setYVel(0);
 				onPlatform = true;
 				this.jumpCounter = this.maxJumps;
+				
+				while (getY() + getHeight() > this.world.platforms[i].getY()) {
+					setY(getY() - 1);
+				}
+				
 				break;
 			} else {
 				
