@@ -33,4 +33,6 @@ public class Board extends JPanel implements ActionListener {
 		this.world.move();
 		repaint();
 	}
+	
+	public World getWorld() { return this.world; }
 }

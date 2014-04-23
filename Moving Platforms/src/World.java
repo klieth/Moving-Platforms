@@ -1,7 +1,6 @@
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
+import java.util.Random;
 
 public class World {
 	
@@ -14,13 +13,18 @@ public class World {
 	Platform[] platforms = new Platform[NUM_PLATFORMS];
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-	Player player = new Player(this, 0, 0, "Sprites/Joffrey.png");
+	Player player;
 	
 	public World() {
 		
+		Random random = new Random();
+		
 		for (int i = 0; i < NUM_PLATFORMS; i++) {
-			platforms[i] = new Platform(i * 80, 100, PLATFORM_PATH);
+			platforms[i] = new Platform(random.nextInt(640), random.nextInt(480), PLATFORM_PATH);
+			
 		}
+		
+		player = new Player(this, (int) platforms[0].getX() + 20, (int) platforms[0].getY() - 64, "/Sprites/Joffrey.png");
 	}
 	
 	public void draw(Graphics2D g2d) {
@@ -56,4 +60,6 @@ public class World {
 		
 		player.move();
 	}
+	
+	public Player getPlayer() { return player; }
 }
