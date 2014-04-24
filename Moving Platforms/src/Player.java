@@ -5,10 +5,10 @@ import java.awt.event.KeyEvent;
 public class Player extends Mob {
 	
 	public final double DEFAULT_FRICTION = .5;
-	public final double DEFAULT_GRAV = .5;
+	public final double DEFAULT_GRAV = .3;
 	public final int DEFAULT_NUM_JUMPS = 5;
 	
-	public final int MAX_X_VEL = 7;
+	public final int MAX_X_VEL = 5;
 	public final int MAX_Y_VEL = 30;
 	
 	private boolean left = false;
@@ -42,7 +42,6 @@ public class Player extends Mob {
 			setXVel(getXVel() + 1);
 		
 		setYVel(getYVel() + this.gravity);
-		testCollide();
 		
 		if (Math.abs(getXVel()) > MAX_X_VEL)
 			setXVel(MAX_X_VEL * (getXVel() / Math.abs(getXVel())));
@@ -50,13 +49,27 @@ public class Player extends Mob {
 		if (Math.abs(getYVel()) > MAX_Y_VEL)
 			setYVel(MAX_Y_VEL * (getYVel() / Math.abs(getYVel())));
 		
-		if (onPlatform && Math.abs(getXVel()) >= this.friction)
+		if (Math.abs(getXVel()) >= this.friction)
 			setXVel(getXVel() - ((getXVel() / Math.abs(getXVel())) * this.friction));
 		
-		if (onPlatform && Math.abs(getXVel()) < this.friction)
+		if (Math.abs(getXVel()) < this.friction)
 			setXVel(0);
 		
-		super.move();
+		for (int i = 0; i < Math.abs(getXVel()); i++) {
+			
+			testCollide();
+			if (getXVel() == 0)
+				break;
+			setX(getX() + (Math.abs(getXVel())/getXVel()));
+		}
+		
+		for (int i = 0; i < Math.abs(getYVel()); i++) {
+			
+			testCollide();
+			if (getYVel() == 0)
+				break;
+			setY(getY() + (Math.abs(getYVel())/getYVel()));
+		}
 	}
 	
 	public double getGravity() { return this.gravity; }
@@ -81,7 +94,7 @@ public class Player extends Mob {
 		
 		// CHANGE HARDCODED STUFF HERE //
 		if (obj instanceof Platform) {
-			if (getY() < objTop - getHeight() || getY() + 59 > objBottom)
+			if (getY() != objTop - getHeight())
 				return false;
 		} else {
 			if (getY() < objTop - getHeight() || getY() > objBottom)
