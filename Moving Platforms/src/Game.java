@@ -19,11 +19,12 @@ public class Game extends JFrame {
 		board = new Board(GAME_WIDTH, GAME_HEIGHT);
 		add(board);
 		
+		addKeyListener(new InputListener());
+		
 		setTitle("Moving Platforms");
 		setSize(GAME_WIDTH, GAME_HEIGHT);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setFocusable(true);
 		setResizable(false);
 	}
 
@@ -35,6 +36,25 @@ public class Game extends JFrame {
 			}
 		});
 
-	}	
+	}
+	
+	private class InputListener implements KeyListener {
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			
+			board.getWorld().getPlayer().KeyPressed(e);
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			
+			board.getWorld().getPlayer().KeyReleased(e);
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) { }
+		
+	}
 
 }

@@ -10,7 +10,6 @@ public class World {
 	
 	public final int NUM_PLATFORMS = 6;
 	public final int GAME_WIDTH, GAME_HEIGHT;
-	public final int TOP_BAR_OFFSET = 23; // declared height of top bar
 	
 	public final String PLATFORM_PATH = "/Sprites/Platform.png";
 	
@@ -77,14 +76,13 @@ public class World {
 		if (button == MouseEvent.BUTTON1) {
 			
 			double xDif = e.getX() - player.getX();
-			double yDif = e.getY() - player.getY(); //vapaavetehinen: hard coded height fix of 23 to deal with shooting offset caused by top bar height calculations
+			double yDif = e.getY() - player.getY();
 			
 			double angle = Math.atan(yDif / xDif);
 			
 			if (xDif < 0)
 				angle += Math.PI;
 			
-			System.out.println("Angle is: " + Math.toDegrees(angle) +" e.getY is: " + e.getY());
 			bullets.add(new Bullet((int) getPlayer().getX(), (int) getPlayer().getY(), angle, 10, "/Sprites/Bullet.png"));
 		}
 
