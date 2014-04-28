@@ -1,5 +1,7 @@
 
+import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class Player extends Mob {
 	
@@ -9,6 +11,8 @@ public class Player extends Mob {
 	
 	public final int MAX_X_VEL = 7;
 	public final int MAX_Y_VEL = 30;
+	
+	private ArrayList<Image> running;
 	
 	private boolean left = false;
 	private boolean right = false;
