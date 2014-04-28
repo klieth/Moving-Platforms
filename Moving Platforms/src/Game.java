@@ -19,9 +19,6 @@ public class Game extends JFrame {
 		board = new Board(GAME_WIDTH, GAME_HEIGHT);
 		add(board);
 		
-		addKeyListener(new InputListener());
-		addMouseListener(new MouseInput());
-		
 		setTitle("Moving Platforms");
 		setSize(GAME_WIDTH, GAME_HEIGHT);
 		setLocationRelativeTo(null);
@@ -38,47 +35,6 @@ public class Game extends JFrame {
 			}
 		});
 
-	}
-	
-	private class InputListener implements KeyListener {
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-			
-			board.getWorld().getPlayer().KeyPressed(e);
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-			
-			board.getWorld().getPlayer().KeyReleased(e);
-		}
-
-		@Override
-		public void keyTyped(KeyEvent e) { }
-		
-	}
-	
-	private class MouseInput implements MouseListener {
-
-		@Override
-		public void mouseClicked(MouseEvent e) { }
-
-		@Override
-		public void mousePressed(MouseEvent e) { }
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			
-			board.getWorld().MouseReleased(e);
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) { }
-
-		@Override
-		public void mouseExited(MouseEvent e) { }
-		
-	}
+	}	
 
 }

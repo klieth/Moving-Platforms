@@ -77,7 +77,7 @@ public class World {
 		if (button == MouseEvent.BUTTON1) {
 			
 			double xDif = e.getX() - player.getX();
-			double yDif = e.getY() - player.getY() - TOP_BAR_OFFSET; //vapaavetehinen: hard coded height fix of 23 to deal with shooting offset caused by top bar height calculations
+			double yDif = e.getY() - player.getY(); //vapaavetehinen: hard coded height fix of 23 to deal with shooting offset caused by top bar height calculations
 			
 			double angle = Math.atan(yDif / xDif);
 			
