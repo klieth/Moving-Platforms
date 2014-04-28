@@ -1,3 +1,6 @@
+
+
+
 // Standard enemy class. Can base types of enemies off this class
 
 public class Enemy extends Mob {
@@ -21,4 +24,5 @@ public class Enemy extends Mob {
 	}
 	
 	// Create pathing system?
+
 }

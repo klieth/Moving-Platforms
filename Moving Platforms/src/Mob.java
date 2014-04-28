@@ -5,7 +5,7 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 
 
-public class Mob {
+public class Mob{
 	
 	//this will be the base class for all moving objects (possibly barring the player)
 	private double xPos, yPos;
@@ -32,6 +32,7 @@ public class Mob {
 			this.img = new ImageIcon(this.url).getImage();
 			this.centerX = this.xPos + (getWidth() / 2);
 			this.centerY = this.yPos + (getHeight() / 2);
+			setSize(img.getWidth(null), img.getHeight(null));
 		} else {
 			
 			this.img = null;
@@ -96,9 +97,9 @@ public class Mob {
 		this.yPos = y;
 	}
 	
-	public int getWidth() { return this.img.getWidth(null); }
+	public int getWidth() { return width; }
 	
-	public int getHeight() { return this.img.getHeight(null); }
+	public int getHeight() { return height; }
 	
 	public double getRotation() { return this.rotation; }
 	public void setRotation(double rotation) { this.rotation = rotation; }

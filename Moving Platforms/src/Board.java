@@ -14,9 +14,9 @@ public class Board extends JPanel implements ActionListener {
 	
 	private Timer timer;
 	
-	public Board() {
+	public Board(int GAME_WIDTH, int GAME_HEIGHT) {
 		
-		this.world = new World();
+		this.world = new World(GAME_WIDTH, GAME_HEIGHT);
 		this.timer = new Timer(20, this);
 		this.timer.start();
 	}

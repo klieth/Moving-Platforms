@@ -9,18 +9,21 @@ import javax.swing.SwingUtilities;
 
 public class Game extends JFrame {
 	
+	public final int GAME_WIDTH = 1080;
+	public final int GAME_HEIGHT = 720;
+	
 	private Board board;
 	
 	public Game() {
 		
-		board = new Board();
+		board = new Board(GAME_WIDTH, GAME_HEIGHT);
 		add(board);
 		
 		addKeyListener(new InputListener());
 		addMouseListener(new MouseInput());
 		
 		setTitle("Moving Platforms");
-		setSize(620, 480);
+		setSize(GAME_WIDTH, GAME_HEIGHT);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setFocusable(true);

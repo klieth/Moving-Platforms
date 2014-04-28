@@ -3,11 +3,14 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 public class World {
 	
 	//This class will manage all the things in the game, and make them do their stuff
 	
 	public final int NUM_PLATFORMS = 6;
+	public final int GAME_WIDTH, GAME_HEIGHT;
+	public final int TOP_BAR_OFFSET = 23; // declared height of top bar
 	
 	public final String PLATFORM_PATH = "/Sprites/Platform.png";
 	
@@ -16,16 +19,19 @@ public class World {
 	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	Player player;
 	
-	public World() {
+	public World(int GAME_WIDTH, int GAME_HEIGHT) {
+		
+		this.GAME_WIDTH = GAME_WIDTH;
+		this.GAME_HEIGHT = GAME_HEIGHT;
 		
 		Random random = new Random();
 		
 		for (int i = 0; i < NUM_PLATFORMS; i++) {
-			platforms[i] = new Platform(random.nextInt(640), random.nextInt(480), PLATFORM_PATH);
+			platforms[i] = new Platform(random.nextInt(GAME_WIDTH), random.nextInt(GAME_HEIGHT), PLATFORM_PATH);
 			
 		}
 		
-		player = new Player(this, (int) platforms[0].getX() + 20, (int) platforms[0].getY() - 64, "/Sprites/Joffrey.png");
+		player = new Player(this, (int) platforms[0].getX() + 20, (int) platforms[0].getY() - 64, "/Sprites/TotallyNotSuperMeatBoy.png");
 	}
 	
 	public void draw(Graphics2D g2d) {
@@ -71,14 +77,16 @@ public class World {
 		if (button == MouseEvent.BUTTON1) {
 			
 			double xDif = e.getX() - player.getX();
+			double yDif = e.getY() - player.getY() - TOP_BAR_OFFSET; //vapaavetehinen: hard coded height fix of 23 to deal with shooting offset caused by top bar height calculations
 			
-			double angle = Math.atan((e.getY() - player.getY()) / (e.getX() - player.getX()));
+			double angle = Math.atan(yDif / xDif);
 			
 			if (xDif < 0)
 				angle += Math.PI;
 			
-			System.out.println("Angle is: " + Math.toDegrees(angle));
+			System.out.println("Angle is: " + Math.toDegrees(angle) +" e.getY is: " + e.getY());
 			bullets.add(new Bullet((int) getPlayer().getX(), (int) getPlayer().getY(), angle, 10, "/Sprites/Bullet.png"));
 		}
+
 	}
 }

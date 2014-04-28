@@ -1,14 +1,13 @@
+
 import java.awt.event.KeyEvent;
-
-
 
 public class Player extends Mob {
 	
 	public final double DEFAULT_FRICTION = .5;
-	public final double DEFAULT_GRAV = .3;
+	public final double DEFAULT_GRAV = .5;
 	public final int DEFAULT_NUM_JUMPS = 5;
 	
-	public final int MAX_X_VEL = 5;
+	public final int MAX_X_VEL = 7;
 	public final int MAX_Y_VEL = 30;
 	
 	private boolean left = false;
@@ -17,6 +16,10 @@ public class Player extends Mob {
 	
 	private double friction;
 	private double gravity;
+	
+	private int moveLeft = KeyEvent.VK_A;
+	private int moveRight = KeyEvent.VK_D;
+	private int jump = KeyEvent.VK_SPACE;
 	
 	private int jumpCounter;
 	private int maxJumps;
@@ -56,20 +59,14 @@ public class Player extends Mob {
 			setXVel(0);
 		
 		for (int i = 0; i < Math.abs(getXVel()); i++) {
-			
-			testCollide();
-			if (getXVel() == 0)
-				break;
 			setX(getX() + (Math.abs(getXVel())/getXVel()));
+			testCollide();
+		}
+		for (int i = 0; i < Math.abs(getYVel()); i++) {
+			setY(getY() + (Math.abs(getYVel())/getYVel()));
+			testCollide();
 		}
 		
-		for (int i = 0; i < Math.abs(getYVel()); i++) {
-			
-			testCollide();
-			if (getYVel() == 0)
-				break;
-			setY(getY() + (Math.abs(getYVel())/getYVel()));
-		}
 	}
 	
 	public double getGravity() { return this.gravity; }
@@ -94,7 +91,7 @@ public class Player extends Mob {
 		
 		// CHANGE HARDCODED STUFF HERE //
 		if (obj instanceof Platform) {
-			if (getY() != objTop - getHeight())
+			if (getY() < objTop - getHeight() || getY() + getHeight() > objBottom)
 				return false;
 		} else {
 			if (getY() < objTop - getHeight() || getY() > objBottom)
@@ -130,13 +127,13 @@ public class Player extends Mob {
 		
 		int key = e.getKeyCode();
 		
-		if (key == KeyEvent.VK_A)
+		if (key == moveLeft)
 			left = true;
 		
-		if (key == KeyEvent.VK_D)
+		if (key == moveRight)
 			right = true;
 		
-		if (key == KeyEvent.VK_SPACE) {
+		if (key == jump) {
 			
 			if (this.jumpCounter > 0) {
 				setYVel(-10);
@@ -154,6 +151,13 @@ public class Player extends Mob {
 		
 		if (key == KeyEvent.VK_D)
 			right = false;
+		if (key == KeyEvent.VK_R)
+		{
+			xVel = 0;
+			yVel = 0;
+			setX(this.world.platforms[1].getX());
+			setY(this.world.platforms[1].getY()- getHeight());
+		}
 	}
 
 }
