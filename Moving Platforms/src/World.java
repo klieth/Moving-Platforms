@@ -26,14 +26,16 @@ public class World {
 		Random random = new Random();
 		
 		for (int i = 0; i < NUM_PLATFORMS; i++) {
-			platforms[i] = new Platform(random.nextInt(GAME_WIDTH), random.nextInt(GAME_HEIGHT), PLATFORM_PATH);
+			platforms[i] = new Platform(random.nextInt(GAME_WIDTH), random.nextInt(GAME_HEIGHT));
 			
 		}
 		
-		player = new Player(this, (int) platforms[0].getX() + 20, (int) platforms[0].getY() - 64, "/Sprites/TotallyNotSuperMeatBoy.png");
+		player = new Player(this, (int) platforms[0].getX() + 20, (int) platforms[0].getY() - 64);
 	}
 	
 	public void draw(Graphics2D g2d) {
+		
+		player.draw(g2d);
 		
 		for (int i = 0; i < platforms.length; i++) {
 			platforms[i].draw(g2d);
@@ -47,7 +49,6 @@ public class World {
 			bullets.get(k).draw(g2d);
 		}
 		
-		player.draw(g2d);
 	}
 	
 	public void move() {
@@ -65,6 +66,16 @@ public class World {
 		}
 		
 		player.move();
+		
+		for (int i = 0; i < bullets.size(); i++) {
+			Bullet bullet = bullets.get(i);
+			if ((bullet.getX() < -bullet.getWidth()) ||
+					(bullet.getX() > this.GAME_WIDTH) ||
+					(bullet.getY() < -bullet.getHeight()) ||
+					(bullet.getY() > this.GAME_HEIGHT)) {
+				bullets.remove(i);
+			}
+		}
 	}
 	
 	public Player getPlayer() { return player; }
@@ -83,7 +94,7 @@ public class World {
 			if (xDif < 0)
 				angle += Math.PI;
 			
-			bullets.add(new Bullet((int) getPlayer().getX(), (int) getPlayer().getY(), angle, 10, "/Sprites/Bullet.png"));
+			bullets.add(new Bullet((int) getPlayer().getX(), (int) getPlayer().getY(), angle, 10));
 		}
 
 	}

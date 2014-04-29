@@ -1,48 +1,62 @@
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URL;
 
-import javax.swing.ImageIcon;
+import javax.swing.Timer;
 
 
-public class Mob{
+public class Mob implements ActionListener {
 	
 	//this will be the base class for all moving objects (possibly barring the player)
+	
+	public final static int STANDING = -1;
+	public final static int RUNNING = 0;
+	
+	public final static int ANIMATION_TIME = 40;
+	
+	private boolean movingLeft;
+	
 	private double xPos, yPos;
 	private double centerX, centerY;
+	private double vel;
+	private double xVel, yVel;
+	
 	private URL url;
 	
 	private double rotation;
 	
 	private Image img;
 	
-	int width, height;
+	private int width;
+	private int height;
+	private int frame;
+	private int state;
 	
-	double vel;
-	double xVel, yVel;
-
-	public Mob(int x, int y, String imgUrl) {
+	private SpriteSheet spriteSheet;
+	
+	private Timer animationTimer;
+	
+	public Mob(int x, int y, SpriteSheet sheet) {
 		
 		this.xPos = x;
 		this.yPos = y;
-		this.url = this.getClass().getResource(imgUrl);
+		this.spriteSheet = sheet;
 		
-		if (this.url != null) {
-			
-			this.img = new ImageIcon(this.url).getImage();
-			this.centerX = this.xPos + (getWidth() / 2);
-			this.centerY = this.yPos + (getHeight() / 2);
-			setSize(img.getWidth(null), img.getHeight(null));
-		} else {
-			
-			this.img = null;
-			this.centerX = this.xPos;
-			this.centerY = this.yPos;
-		}
+		updateImage();
+		this.centerX = this.xPos + (getWidth() / 2);
+		this.centerY = this.yPos + (getHeight() / 2);
+		setSize(img.getWidth(null) * 2, img.getHeight(null) * 2);
+		
+		this.animationTimer = new Timer(ANIMATION_TIME, this);
+		this.animationTimer.start();
 		
 		this.rotation = 0;
 		this.xVel = 0;
 		this.yVel = 0;
+		this.state = STANDING;
+		this.movingLeft = false;
 	}
 
 	public void setSize(int width, int height) {
@@ -81,7 +95,11 @@ public class Mob{
 	public void draw(Graphics2D g2d) {
 		
 		g2d.rotate(this.rotation, this.centerX, this.centerY);
-		g2d.drawImage(getImage(), (int) getX(), (int) getY(), getWidth(), getHeight(), null);
+		if (this.movingLeft) {
+			g2d.drawImage(getImage(), (int) getX() + getWidth(), (int) getY(), (int) getX(), (int) getY() + getHeight(), 0, 0, img.getWidth(null), img.getHeight(null), null);
+		} else {
+			g2d.drawImage(getImage(), (int) getX(), (int) getY(), getWidth(), getHeight(), null);
+		}
 		g2d.rotate(-this.rotation, this.centerX, this.centerY);
 	}
 	
@@ -97,14 +115,17 @@ public class Mob{
 		this.yPos = y;
 	}
 	
-	public int getWidth() { return width; }
+	public int getWidth() { return this.width; }
 	
-	public int getHeight() { return height; }
+	public int getHeight() { return this.height; }
 	
 	public double getRotation() { return this.rotation; }
 	public void setRotation(double rotation) { this.rotation = rotation; }
 	
 	public Image getImage() { return this.img; }
+	
+	public int getState() { return this.state; }
+	public void setState(int state) { this.state = state; }
 	
 	public void updateCenter() {
 		
@@ -119,4 +140,33 @@ public class Mob{
 		}
 	}
 	
+	public void updateImage() {
+		
+		if (getXVel() < 0)
+			this.movingLeft = true;
+		
+		if (getXVel() > 0)
+			this.movingLeft = false;
+		
+		if (getXVel() == 0 && getYVel() == 0)
+			state = STANDING;
+		
+		if (this.state == STANDING) {
+			
+			this.img = this.spriteSheet.getImage(0, 0);
+			
+		} else {
+			this.frame += 1;
+			
+			if (this.frame > this.spriteSheet.COLUMNS)
+				this.frame = 0;
+			
+			this.img = this.spriteSheet.getImage(state, this.frame);
+		}
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		updateImage();
+	}
 }

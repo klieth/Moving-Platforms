@@ -25,6 +25,7 @@ public class Board extends JPanel implements ActionListener {
 		addKeyListener(new InputListener());
 		addMouseListener(new MouseInput());
 		setFocusable(true);
+		setDoubleBuffered(true);
 		
 		this.timer = new Timer(20, this);
 		this.timer.start();

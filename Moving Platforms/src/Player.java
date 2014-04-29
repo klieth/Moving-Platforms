@@ -5,14 +5,17 @@ import java.util.ArrayList;
 
 public class Player extends Mob {
 	
+	public final static int SHEET_WIDTH = 32;
+	public final static int SHEET_HEIGHT = 32;
+	
+	public final static String SPRITE_PATH = "/Sprites/PlayerSpriteSheet.png";
+	
 	public final double DEFAULT_FRICTION = .5;
 	public final double DEFAULT_GRAV = .5;
-	public final int DEFAULT_NUM_JUMPS = 5;
 	
+	public final int DEFAULT_NUM_JUMPS = 5;
 	public final int MAX_X_VEL = 7;
 	public final int MAX_Y_VEL = 30;
-	
-	private ArrayList<Image> running;
 	
 	private boolean left = false;
 	private boolean right = false;
@@ -30,8 +33,8 @@ public class Player extends Mob {
 	
 	private World world;
 	
-	public Player(World world, int x, int y, String imgUrl) {
-		super(x, y, imgUrl);
+	public Player(World world, int x, int y) {
+		super(x, y, new SpriteSheet(SPRITE_PATH, SHEET_WIDTH, SHEET_HEIGHT));
 		
 		this.world = world;
 		this.gravity = DEFAULT_GRAV;
@@ -157,11 +160,19 @@ public class Player extends Mob {
 			right = false;
 		if (key == KeyEvent.VK_R)
 		{
-			xVel = 0;
-			yVel = 0;
+			setXVel(0);
+			setYVel(0);
 			setX(this.world.platforms[1].getX());
 			setY(this.world.platforms[1].getY()- getHeight());
 		}
+	}
+	
+	@Override
+	public void updateImage() {
+		if (getXVel() != 0 && this.onPlatform)
+			setState(Mob.RUNNING);
+		
+		super.updateImage();
 	}
 
 }
