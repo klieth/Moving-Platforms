@@ -1,12 +1,19 @@
+package player;
 
-import java.awt.Image;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
+
+import core.Mob;
+import core.SpriteSheet;
+import core.World;
+import world.Platform;
 
 public class Player extends Mob {
 	
 	public final static int SHEET_WIDTH = 32;
 	public final static int SHEET_HEIGHT = 32;
+	
+	public final static int FRONT_ARM_X = 7;
+	public final static int FRONT_ARM_Y = 9;
 	
 	public final static String SPRITE_PATH = "/Sprites/PlayerSpriteSheet.png";
 	
@@ -66,14 +73,25 @@ public class Player extends Mob {
 			setXVel(0);
 		
 		for (int i = 0; i < Math.abs(getXVel()); i++) {
-			setX(getX() + (Math.abs(getXVel())/getXVel()));
+			
 			testCollide();
+			if (getXVel() == 0) {
+				break;
+			}
+			setX(getX() + (Math.abs(getXVel())/getXVel()));
 		}
+		
 		for (int i = 0; i < Math.abs(getYVel()); i++) {
+			
+			testCollide();
+			if (getYVel() == 0) {
+				break;
+			}
 			setY(getY() + (Math.abs(getYVel())/getYVel()));
 			testCollide();
 		}
 		
+		updateState();
 	}
 	
 	public double getGravity() { return this.gravity; }
@@ -98,7 +116,7 @@ public class Player extends Mob {
 		
 		// CHANGE HARDCODED STUFF HERE //
 		if (obj instanceof Platform) {
-			if (getY() < objTop - getHeight() || getY() + getHeight() > objBottom)
+			if (getY() + getHeight() != objTop)
 				return false;
 		} else {
 			if (getY() < objTop - getHeight() || getY() > objBottom)
@@ -110,15 +128,15 @@ public class Player extends Mob {
 	
 	private void testCollide() {
 		
-		for (int i = 0; i < this.world.platforms.length; i++) {
+		for (int i = 0; i < this.world.getPlatforms().length; i++) {
 			
-			if (collideMob(this.world.platforms[i]) && getYVel() > 0) {
+			if (collideMob(this.world.getPlatforms()[i]) && getYVel() > 0) {
 				
 				setYVel(0);
 				onPlatform = true;
 				this.jumpCounter = this.maxJumps;
 				
-				while (getY() + getHeight() > this.world.platforms[i].getY()) {
+				while (getY() + getHeight() > this.world.getPlatforms()[i].getY()) {
 					setY(getY() - 1);
 				}
 				
@@ -162,17 +180,17 @@ public class Player extends Mob {
 		{
 			setXVel(0);
 			setYVel(0);
-			setX(this.world.platforms[1].getX());
-			setY(this.world.platforms[1].getY()- getHeight());
+			setX(this.world.getPlatforms()[1].getX());
+			setY(this.world.getPlatforms()[1].getY()- getHeight());
 		}
 	}
 	
 	@Override
-	public void updateImage() {
+	public void updateState() {
 		if (getXVel() != 0 && this.onPlatform)
 			setState(Mob.RUNNING);
 		
-		super.updateImage();
+		super.updateState();
 	}
 
 }

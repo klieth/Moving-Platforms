@@ -1,3 +1,6 @@
+package world;
+import core.Mob;
+
 
 public class Gun {
 	

@@ -1,7 +1,13 @@
+package core;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
+
+import player.Player;
+import world.Bullet;
+import world.Enemy;
+import world.Platform;
 
 
 public class World {
@@ -98,4 +104,6 @@ public class World {
 		}
 
 	}
+	
+	public Platform[] getPlatforms() { return this.platforms; }
 }

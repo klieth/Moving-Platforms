@@ -1,7 +1,9 @@
+package menu;
 import java.awt.Graphics2D;
 import java.awt.Image;
 
-import javax.swing.ImageIcon;
+import core.Mob;
+import core.SpriteSheet;
 
 
 public class Button extends Mob {
@@ -11,11 +13,8 @@ public class Button extends Mob {
 	private Image buttonImg;
 	private Image selectedBtnImage;
 	
-	public Button(int x, int y, String path, String selectedPath) {
-		super(x, y, path);
-		
-		this.buttonImg = new ImageIcon(path).getImage();
-		this.selectedBtnImage = new ImageIcon(selectedPath).getImage();
+	public Button(int x, int y, String path, int spriteWidth, int spriteHeight) {
+		super(x, y, new SpriteSheet(path, spriteWidth, spriteHeight));
 	}
 	
 	@Override

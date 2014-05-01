@@ -1,29 +1,28 @@
+package core;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 
 import javax.swing.Timer;
 
 
+// base class for all moving objects
+
 public class Mob implements ActionListener {
 	
-	//this will be the base class for all moving objects (possibly barring the player)
-	
+	// row #'s on the sprite sheet for different animations
 	public final static int STANDING = -1;
 	public final static int RUNNING = 0;
+	public final static int ARM = 1;
 	
-	public final static int ANIMATION_TIME = 40;
+	public final static int ANIMATION_TIME = 80;
 	
 	private boolean movingLeft;
 	
 	private double xPos, yPos;
 	private double centerX, centerY;
-	private double vel;
 	private double xVel, yVel;
-	
-	private URL url;
 	
 	private double rotation;
 	
@@ -90,13 +89,14 @@ public class Mob implements ActionListener {
 		setY(getY() + getYVel());
 		
 		updateCenter();
+		updateState();
 	}
 	
 	public void draw(Graphics2D g2d) {
 		
 		g2d.rotate(this.rotation, this.centerX, this.centerY);
 		if (this.movingLeft) {
-			g2d.drawImage(getImage(), (int) getX() + getWidth(), (int) getY(), (int) getX(), (int) getY() + getHeight(), 0, 0, img.getWidth(null), img.getHeight(null), null);
+			g2d.drawImage(getImage(), (int) getX() + getWidth(), (int) getY(), (int) getX(), (int) getY() + getHeight(), 0, 0, this.img.getWidth(null), this.img.getHeight(null), null);
 		} else {
 			g2d.drawImage(getImage(), (int) getX(), (int) getY(), getWidth(), getHeight(), null);
 		}
@@ -127,6 +127,12 @@ public class Mob implements ActionListener {
 	public int getState() { return this.state; }
 	public void setState(int state) { this.state = state; }
 	
+	public int getCenterX() { return (int) this.centerX; }
+	public void setCenterX(int x) { this.centerX = x; }
+	
+	public int getCenterY() { return (int) this.centerY; }
+	public void setCenterY(int y) { this.centerY = y; }
+	
 	public void updateCenter() {
 		
 		if (this.img != null) {
@@ -140,7 +146,7 @@ public class Mob implements ActionListener {
 		}
 	}
 	
-	public void updateImage() {
+	public void updateState() {
 		
 		if (getXVel() < 0)
 			this.movingLeft = true;
@@ -150,6 +156,9 @@ public class Mob implements ActionListener {
 		
 		if (getXVel() == 0 && getYVel() == 0)
 			state = STANDING;
+	}
+	
+	public void updateImage() {
 		
 		if (this.state == STANDING) {
 			
@@ -158,7 +167,7 @@ public class Mob implements ActionListener {
 		} else {
 			this.frame += 1;
 			
-			if (this.frame > this.spriteSheet.COLUMNS)
+			if (this.frame >= this.spriteSheet.numColumns(this.state))
 				this.frame = 0;
 			
 			this.img = this.spriteSheet.getImage(state, this.frame);

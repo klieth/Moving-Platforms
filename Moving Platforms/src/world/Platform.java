@@ -1,3 +1,7 @@
+package world;
+import core.Mob;
+import core.SpriteSheet;
+
 
 
 public class Platform extends Mob{
