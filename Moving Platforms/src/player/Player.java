@@ -17,6 +17,8 @@ public class Player extends Mob {
 	
 	public final static String SPRITE_PATH = "/Sprites/PlayerSpriteSheet.png";
 	
+	public final static SpriteSheet SPRITE_SHEET = new SpriteSheet(SPRITE_PATH, SHEET_WIDTH, SHEET_HEIGHT);
+	
 	public final double DEFAULT_FRICTION = .5;
 	public final double DEFAULT_GRAV = .5;
 	
@@ -41,7 +43,7 @@ public class Player extends Mob {
 	private World world;
 	
 	public Player(World world, int x, int y) {
-		super(x, y, new SpriteSheet(SPRITE_PATH, SHEET_WIDTH, SHEET_HEIGHT));
+		super(x, y, SPRITE_SHEET);
 		
 		this.world = world;
 		this.gravity = DEFAULT_GRAV;
