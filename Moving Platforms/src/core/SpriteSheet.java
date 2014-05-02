@@ -39,31 +39,17 @@ public class SpriteSheet {
 				
 				BufferedImage image = toBufferedImage(this.sheet.getSubimage(j * this.WIDTH, i * this.COLUMNS, this.WIDTH, this.HEIGHT));
 				
-				boolean transparent = true;
-				for (int x = 0; x < image.getWidth(); x++) {
-					for (int y = 0; y < image.getHeight(); y++) {
-						
-						if (!isTransparent(image, x, y)) {
-							transparent = false;
-							break;
-						}
-					}
-					
-					if (!transparent) {
-						break;
-					}
-				}
-				
-				if (!transparent) {
+				if (!isBlank(image)) {
 					this.images.get(i).add(image);
 				}
 			}
 		}
 	}
 	
-	public boolean isTransparent(BufferedImage img, int x, int y ) {
-		  int pixel = img.getRGB(x,y);
-		  if ((pixel>>24) == 0x00) {
+	public boolean isBlank(BufferedImage img) {
+		  int pixel = img.getRGB(0, 0);
+		  if (pixel == ((255)<<24|(255)<<16|(109)<<8|(255))) {
+
 		      return true;
 		  }
 		  
